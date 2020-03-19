@@ -9,6 +9,9 @@ const bot = new Client({
 bot.commands = new Collection;
 bot.aliases = new Collection();
 
+bot.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+  });
 
 config({
     path: __dirname+ "/.env"

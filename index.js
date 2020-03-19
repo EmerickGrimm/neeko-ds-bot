@@ -49,6 +49,4 @@ bot.on("message",async message => {
         command.run(bot, message, args);
 });
 
-bot.listen(process.env.PORT || 5000);
-
 bot.login(process.env.TOKEN);

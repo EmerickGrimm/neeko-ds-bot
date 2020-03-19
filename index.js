@@ -18,10 +18,7 @@ config({
     require(`./handler/${handler}`)(bot);
 });
 
-bot.on("ready",() =>{
- 
- 
-});
+
 
 fs.readdir('./events/',(err, files) =>{
 if(err) return console.error;

@@ -19,11 +19,22 @@ config({
 });
 
 bot.on("ready",() =>{
-    console.log("I'm online!")
-
+ 
  
 });
 
+fs.readdir('./events/',(err, files) =>{
+if(err) return console.error;
+
+files.forEach(file => {
+    if(!file.endsWith('.js')) return;
+    const evt = require(`./events/${file}`);
+    let evtName = file.split('.')[0];
+    console.log(`Loaded ${evtName}.`);
+    bot.on(evtName, evt.bind(null,bot));
+})
+
+}); 
 
 
 
@@ -49,6 +60,7 @@ bot.on("message",async message => {
         command.run(bot, message, args);
 });
 
-bot.listen(process.env.PORT || 5000);
+
 
 bot.login(process.env.TOKEN);
+

@@ -33,6 +33,7 @@ module.exports = {
         
          `)
                 .setColor(`#03fce3`)
+                .setFooter(`ID: ${message.author.id}`);
                 message.channel.send(embed).then(async msg => {
 
          await msg.react('🦃');

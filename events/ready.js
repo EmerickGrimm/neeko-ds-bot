@@ -1,3 +1,5 @@
 module.exports = bot =>{
     console.log("I'm online!");
+    const welcome = bot.channels.cache.find(c => c.name === 'welcome');
+    welcome.messages.fetch({limit:10}).then(collected => console.log(`Fetched `+collected.size)).catch(console.error);
 }

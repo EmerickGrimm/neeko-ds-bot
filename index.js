@@ -52,4 +52,11 @@ bot.on("message",async message => {
         command.run(bot, message, args);
 });
 
+var http = require('http');
+http.createServer(function (req, res) {
+  res.end();
+}).listen(8080);
+
+
 bot.login(process.env.TOKEN);
+

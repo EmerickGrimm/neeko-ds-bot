@@ -25,8 +25,6 @@ module.exports = {
          const embed = new discord.MessageEmbed()
             .setTitle('Доступные Роли')
             .setDescription(`
-
-            **Доступные Роли: ** 
         
             🔫   ${a.toString()} ***Игроки в CS:GO***
             💛   ${b.toString()} ***Игроки в Overwatch***

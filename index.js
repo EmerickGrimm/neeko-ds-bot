@@ -60,6 +60,7 @@ bot.on("message",async message => {
         command.run(bot, message, args);
 });
 
+//console.log(process.env.TOKEN);
 
 bot.login(process.env.TOKEN);
 

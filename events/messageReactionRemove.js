@@ -10,7 +10,7 @@ module.exports = async(bot, messageReaction, user) =>{
         const c = message.guild.roles.cache.get('673506380245893121'); //LoL
         const d = message.guild.roles.cache.get('687665235380928527'); //NSFW
 
-    if (['🔫 ','💛 ','💙','🔞'].includes(messageReaction.emoji.name)&& message.channel.id === channel.id){
+    if (['🔫','💛','💙','🔞'].includes(messageReaction.emoji.name)&& message.channel.id === channel.id){
         switch(messageReaction.emoji.name){
             case '🔫':
                 member.roles.remove([a.id]).catch(console.error);

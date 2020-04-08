@@ -23,6 +23,7 @@ config({
 fs.readdir('./events/',(err, files) =>{
 if(err) return console.error;
 
+
 files.forEach(file => {
     if(!file.endsWith('.js')) return;
     const evt = require(`./events/${file}`);
@@ -58,6 +59,4 @@ bot.on("message",async message => {
 });
 
 
-
 bot.login(process.env.TOKEN);
-

@@ -5,11 +5,16 @@
   "main": "index.js",
   "dependencies": {
     "ascii-table": "^0.0.9",
+    "booru": "^2.2.1",
     "common-tags": "^1.8.0",
     "discord.js": "^12.0.2",
     "dotenv": "^8.2.0",
     "enmap": "^5.2.4",
-    "fs": "^0.0.1-security"
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "random-puppy": "^1.1.0",
+    "snekfetch": "^4.0.4",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {},
   "scripts": {

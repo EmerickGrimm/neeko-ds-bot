@@ -92,19 +92,19 @@ module.exports = {
             }
 
             if (TotalTimeInVoice < 60){
-              return TotalTimeStats = `${TotalTimeInVoice} секунд`
+              return TotalTimeStats = `${TotalTimeInVoice.toFixed(0)} секунд`
 
             }
 
             if (TotalTimeInVoice > 60 && TotalTimeInVoice < 3600){
-              var minutes = Math.floor(TotalTimeInVoice / 60);
-              var seconds = TotalTimeInVoice - minutes * 60;
+              var minutes = Math.floor(TotalTimeInVoice / 60).toFixed(0);
+              var seconds = (TotalTimeInVoice - minutes * 60).toFixed(0);
 
               return TotalTimeStats = `${minutes} минут(у) ${seconds} секунд(ы)`
             }
 
             if (TotalTimeInVoice > 3600){
-              var hours = Math.floor(TotalTimeInVoice / 3600);
+              var hours = Math.floor((TotalTimeInVoice / 3600).toFixed(0));
               return TotalTimeStats = `${hours} час(а)`
             }
 

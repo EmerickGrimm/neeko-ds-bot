@@ -111,7 +111,9 @@ if(oldState.channel && !newState.channel) { //When user left channnel
 
                 let LastSessionDuration = new Number (msToSeconds(EndTime - StartTime));
            
+               console.log(`Last session Duration: ${EndTime - StartTime}`);
                console.log(`Last session Duration: ${LastSessionDuration}`);
+
                // console.log(`Last session Duration(supposed to): ${typeof EndTime - StartTime}`)
                 
                 let TotalTime = new Number (guildXpObject['TotalTimeInVoice']);
@@ -182,7 +184,7 @@ function updateLVL(exp,CurrentLevel,UserID,member){
     // console.log((updatedLevel > CurrentLevel));
      if (updatedLevel > CurrentLevel){
          //console.log(updatedLevel)
-         RoleUpdate(updatedLevel,UserID,member);
+        RoleUpdate(updatedLevel,UserID,member);
          return updatedLevel;
      }else{
          return CurrentLevel;
@@ -195,7 +197,9 @@ function generateExperiencePoints(maxPoints){
 }
 
 function msToSeconds(ms){
-    var seconds = new Number ((ms % 60000) / 1000).toFixed(0);
+    var seconds = new Number (ms / 1000);
+    console.log(`Last session Duration: ${seconds}`);
+
     return seconds;
 }
 

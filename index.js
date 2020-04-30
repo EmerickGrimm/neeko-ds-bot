@@ -47,7 +47,7 @@ bot.on("message",async message => {
 
     if (!message.author.bot){
 
-        gainXP(message,10);
+        //gainXP(message,10);
     }
 
 
@@ -69,6 +69,7 @@ bot.on("message",async message => {
 });
 
 /// level system ///
+/*
 async function gainXP (message, maxPointsGained){
 
     let xpFile = await fs.readFileSync('userxp.json', 'utf8');
@@ -186,7 +187,7 @@ function generateExperiencePoints(maxPoints){
 
     return Math.round(Math.random()* maxPoints);
 }
-
+*/
 ////////////////////
 
 bot.login(process.env.TOKEN);

@@ -21,14 +21,14 @@ if (message.mentions.members.first().user.id == message.author.id){
 if(message.mentions.members.first()){
            
 
-        superagent.get('https://nekos.life/api/v2/img/pat')
+        superagent.get('https://purrbot.site/api/img/sfw/pat/gif')
         .end((err, response) => {
         
 
     console.log(`--------------------`)
     console.log(`Posting pat gif`)
     console.log(`Patting: ${message.mentions.members.first()}`)
-    console.log(`File: ${response.body.url}`);
+    console.log(`File: ${response.body.link}`);
     console.log(`Ordered by: ${message.author.tag}`);
     console.log(`--------------------`)
 
@@ -36,7 +36,7 @@ if(message.mentions.members.first()){
     const Embed = new discord.MessageEmbed()
             .setDescription(`${message.author} погладил ${message.mentions.members.first()}`)
             .setColor('#fc3d03')
-            .setImage(`${response.body.url}`)
+            .setImage(`${response.body.link}`)
             .setTimestamp()
             message.channel.send(Embed).then(async msg => {
                 await msg.react('❤️');

@@ -15,9 +15,12 @@ if (message.channel.nsfw == true){
 
     superagent.get('https://nekos.life/api/v2/img/feet')
         .end((err, response) => {
+        
         if(err) {
             console.log(`😳 Произошла ошибка ${err}`);
-            message.channel.send(`Произошла ошибка, сегодня не дрочешь ლ(ಠ益ಠლ `)
+            message.channel.send(`Произошла ошибка, сегодня не дрочешь ლ(ಠ益ಠლ `);
+        }else {
+            
         }
 
     console.log(`--------------------`)
@@ -29,7 +32,7 @@ if (message.channel.nsfw == true){
     
     const Embed = new discord.MessageEmbed()
             .setColor('#ad42f5')
-            .setImage(`${response.body.url}`)
+            .setImage(`${response.body.link}`)
             .setTimestamp()
             .setFooter(`Заказал: ${message.author.tag}`)
             message.channel.send(Embed).then(async msg => {

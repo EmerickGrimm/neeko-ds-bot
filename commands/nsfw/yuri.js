@@ -13,24 +13,24 @@ module.exports = {
 
 if (message.channel.nsfw == true){
 
-    superagent.get('https://nekos.life/api/v2/img/les')
+    superagent.get('https://purrbot.site/api/img/nsfw/yuri/gif')
         .end((err, response) => {
 
             if(err) {
                 console.log(`😳 Произошла ошибка ${err}`);
                 message.channel.send(`Произошла ошибка, сегодня не дрочешь ლ(ಠ益ಠლ `)
             }
-            
+
     console.log(`--------------------`)
     console.log(`Posting hentai yuri pic`)
-    console.log(`File: ${response.body.url}`);
+    console.log(`File: ${response.body.link}`);
     console.log(`Ordered by: ${message.author.tag}`);
     console.log(`--------------------`)
 
     
     const Embed = new discord.MessageEmbed()
             .setColor('#ad42f5')
-            .setImage(`${response.body.url}`)
+            .setImage(`${response.body.link}`)
             .setTimestamp()
             .setFooter(`Заказал: ${message.author.tag}`)
             message.channel.send(Embed).then(async msg => {

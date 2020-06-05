@@ -1,20 +1,32 @@
+global.mongose = require("mongoose");
+
 const {Client, RichEmbed, Collection} = require ('discord.js');
 const {config} = require('dotenv');
 const Enmap = require('enmap');
 const fs = require ("fs");
+const stats = require("./schemes/statsScheme.js");
+
 const bot = new Client({
     disableEvryone: true
 });
 
 
-bot.commands = new Collection;
-bot.aliases = new Collection();
-
-
-
 config({
     path: __dirname+ "/.env"
 });
+
+bot.commands = new Collection;
+bot.aliases = new Collection();
+
+mongose.connect(process.env.DBURI,
+    { useNewUrlParser: true, useUnifiedTopology: true,}, (err) =>{
+        if(err) return console.log(err);
+        console.log(`CONNECTED TO MONGO 🥭!`);
+    });
+
+
+
+
 
 ["command"].forEach(handler => {
     require(`./handler/${handler}`)(bot);
@@ -47,7 +59,7 @@ bot.on("message",async message => {
 
     if (!message.author.bot){
 
-        gainXP(message,10);
+       gainXP(message,10);
     }
 
 
@@ -68,65 +80,41 @@ bot.on("message",async message => {
         command.run(bot, message, args);
 });
 
+
+
+
+
 /// level system ///
-async function gainXP (message, maxPointsGained){
-
-    let xpFile = await fs.readFileSync('userxp.json', 'utf8');
-        let xpObject = JSON.parse(xpFile);
-        if(xpObject.hasOwnProperty(message.author.id)){
-            let userXpObject = xpObject [message.author.id];
-            if (userXpObject.hasOwnProperty(message.guild.id)){
-                let guildXpObject = userXpObject[message.guild.id];
-                let newXp = generateExperiencePoints(maxPointsGained);
-                let currentXp = guildXpObject['userXP'];
-                let CurrentMessageCount = new Number (guildXpObject['MessageSent']);
-                let updatedXp = currentXp + newXp;
-                let CurrentLevel = guildXpObject['userLevel']
-
-                let MessageCount = new Number (CurrentMessageCount + 1);
-
-
-
-                let newLevel = updateLVL(message,updatedXp,CurrentLevel);
-                xpObject[message.author.id][message.guild.id]['userXP'] = updatedXp;
-                xpObject[message.author.id][message.guild.id]['userLevel'] = newLevel;
-                xpObject[message.author.id][message.guild.id]['MessageSent'] = MessageCount;
-                
-
-                console.log(`User ${message.author.tag} gained ${newXp} for message`);
-
-                await fs.writeFileSync('userxp.json',JSON.stringify(xpObject,null,4,'utf8'));
-            }else{
-                xpObject[message.author.id][message.guild.id] = {
-                    userXP: generateExperiencePoints(maxPointsGained),
-                    userLevel: 1,
-                    TotalTimeInVoice: 0,
-                    TopTime: 0,
-                    LastSessionDuration: 0,
-                    MessageSent: 1
-                }
-                console.log(`Guild ${message.guild.id} has been added`);
-                await fs.writeFileSync('userxp.json',JSON.stringify(xpObject,null,4,'utf8'));
-            }
-
-        }else{
-            let guildId = message.guild.id;
-            xpObject[message.author.id] = {}
-            xpObject[message.author.id][guildId] = {
+ async function gainXP (message, maxPointsGained){
+    stats.findOne({
+        userID: message.author.id,
+        serverID: message.guild.id
+    }, (err, Stats) =>{
+        if(!Stats){
+            const newStats = new stats({
+                userID: message.author.id,
+                serverID: message.guild.id,
                 userXP: generateExperiencePoints(maxPointsGained),
                 userLevel: 1,
+                MessageSent: 1,
                 TotalTimeInVoice: 0,
                 TopTime: 0,
                 LastSessionDuration: 0,
-                MessageSent: 1
-            }
-
-            console.log(`User ${message.author.id} has been added to guild ${guildId}`);
-            await fs.writeFileSync('userxp.json',JSON.stringify(xpObject,null,4,'utf8'));
+                LastSessionEndTime: 0,
+                LastSessionStartTime: 0
+            })
+            newStats.save().catch(err => console.log(err));
+            message.channel.send(`🥰 Теперь и ${message.author.username} получает опыт за сообщения.`)
+        }else{
+           let NewXP = new Number (Stats.userXP + generateExperiencePoints(maxPointsGained));
+            Stats.userXP = NewXP;
+            OldLevel = Stats.userLevel;
+            Stats.MessageSent = Stats.MessageSent + 1;
+            Stats.userLevel = updateLVL(message,NewXP,OldLevel)
+            Stats.save().catch(err => console.log(err));
         }
-
-    }
-
+    })
+}
 
 function updateLVL(message,exp,CurrentLevel){
    let updatedLevel = (Math.floor((exp/1000)));
@@ -138,7 +126,7 @@ function updateLVL(message,exp,CurrentLevel){
 
     if (updatedLevel > CurrentLevel){
       //  console.log(updatedLevel)
-        RoleUpdate(updatedLevel,message);
+      //  RoleUpdate(updatedLevel,message);
         return updatedLevel;
     }else{
         return CurrentLevel;

@@ -16,9 +16,8 @@ module.exports = {
         superagent.get('https://nekos.life/api/v2/endpoints')
         .end((err, response) => {
         
-
           console.log(`Neko's endpoint result: ${response.body}`);
 
-    })
+    }) 
 }
 }

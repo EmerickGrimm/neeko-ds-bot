@@ -15,6 +15,10 @@ if (message.channel.nsfw == true){
 
     superagent.get('https://nekos.life/api/v2/img/Random_hentai_gif')
         .end((err, response) => {
+            if(err) {
+                console.log(`😳 Произошла ошибка ${err}`);
+                message.channel.send(`Произошла ошибка, сегодня не дрочешь ლ(ಠ益ಠლ `)
+            }
 
     console.log(`--------------------`)
     console.log(`Posting hentai gif`)

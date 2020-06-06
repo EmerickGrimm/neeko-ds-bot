@@ -10,6 +10,7 @@ module.exports = {
 
         tcpp.ping({ address: 'https://nekos.life', port: 443 }, function(err, data) {
             console.log(data);
+            console.log(`Error: ${err}`)
         });
 
 

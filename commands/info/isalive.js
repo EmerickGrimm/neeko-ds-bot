@@ -8,7 +8,7 @@ module.exports = {
 
         await message.delete().catch (O_o=>{});
 
-        tcpp.ping({ address: 'nekos.life', port: 80 }, function(err, data) {
+        tcpp.ping({ address: 'https://nekos.life', port: 443 }, function(err, data) {
             console.log(data);
         });
 

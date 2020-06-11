@@ -104,6 +104,7 @@ bot.on("message",async message => {
                 LastSessionStartTime: 0
             })
             newStats.save().catch(err => console.log(err));
+            console.log(`User ${message.author.id} added to DB`)
             message.channel.send(`🥰 Теперь и ${message.author.username} получает опыт за сообщения.`)
         }else{
            let NewXP = new Number (Stats.userXP + generateExperiencePoints(maxPointsGained));
@@ -112,61 +113,22 @@ bot.on("message",async message => {
             Stats.MessageSent = Stats.MessageSent + 1;
             Stats.userLevel = updateLVL(message,NewXP,OldLevel)
             Stats.save().catch(err => console.log(err));
+            console.log(`User ${message.author.id} gained xp for message`)
+
         }
     })
 }
 
 function updateLVL(message,exp,CurrentLevel){
    let updatedLevel = (Math.floor((exp/1000)));
-  // console.log(Math.floor((exp/1000)))
-    //console.log(updatedLevel)
-   // console.log(CurrentLevel);
-   // console.log((updatedLevel > CurrentLevel));
-  // CountMessage(message);
+
 
     if (updatedLevel > CurrentLevel){
-      //  console.log(updatedLevel)
-      //  RoleUpdate(updatedLevel,message);
+ 
         return updatedLevel;
     }else{
         return CurrentLevel;
     }
-}
-
-
-
-function RoleUpdate(newLevel,message){
-   
-    const stranger = message.guild.roles.cache.get('629196137353707529'); //Странник
-    const local = message.guild.roles.cache.get('700373227427594341'); //Местный
-    const citizen = message.guild.roles.cache.get('687666356572913708'); //горожанин
-    const trador = message.guild.roles.cache.get('700375028348354570'); //торговец
-    const jentelman = message.guild.roles.cache.get('690308333747568852'); //Джентельмен
-
-    switch (newLevel){
-        case 2:
-        message.member.roles.add([stranger.id]).catch(console.error);
-        message.channel.send(`${message.author} получил роль ${stranger.toString()} за уровень ${newLevel}! 🙀`)
-        break;
-        case 6:
-            message.member.roles.add([local.id]).catch(console.error);
-            message.channel.send(`${message.author} получил роль ${local.toString()} за уровень ${newLevel}! 🙀`)
-            break;
-        case 20:
-            message.member.roles.add([citizen.id]).catch(console.error);
-            message.channel.send(`${message.author} получил роль ${citizen.toString()} за уровень ${newLevel}! 🙀`)
-            break;
-        case 40:
-            message.member.roles.add([trador.id]).catch(console.error);
-            message.channel.send(`${message.author} получил роль ${trador.toString()} за уровень ${newLevel}! 🙀`)
-            break;
-        case 60:
-            message.member.roles.add([jentelman.id]).catch(console.error);
-            message.channel.send(`${message.author} получил роль ${jentelman.toString()} за уровень ${newLevel}! 🙀`)
-            break;
-    }
-
-    return;
 }
 
 

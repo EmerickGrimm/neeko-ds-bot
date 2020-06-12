@@ -54,10 +54,10 @@ module.exports = {
                   "name": "💬 Сообщений:",
                   "value": `${userStats.MessageSent}`
                 },
-                {
+              /*  {
                   "name": "⌚️ Провел в войсе:",
                   "value": `${TotalTimeStatsCalc(userStats.TotalTimeInVoice)}`
-                },
+                },*/
                 {
                   "name": "☎ Самый долгий разговор:",
                   "value": `${TotalTimeStatsCalc(userStats.TopTime)}`

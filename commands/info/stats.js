@@ -101,9 +101,11 @@ module.exports = {
 
         if (TotalTimeInVoice > 3600){
           var hours = Math.floor((TotalTimeInVoice / 3600).toFixed(0));
-          return TotalTimeStats = `${hours} час(а)`
-        }
-
+          var m = Math.floor(TotalTimeInVoice % 3600 / 60);
+          if (m !=0) {
+            return TotalTimeStats = `${hours} час(ов) ${m} минут`
+          }
+       }
     }
   }
 }

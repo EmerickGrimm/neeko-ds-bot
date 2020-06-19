@@ -87,16 +87,17 @@ module.exports = (bot, oldState, newState)=>{
             serverID: GuildID
         }, (err, Stats) =>{ 
 
-
-            console.log(`End time from DB: ${Stats.LastSessionEndTime}`)
-            console.log(`Start time from DB: ${Stats.LastSessionStartTime}`)
-        
             if  (Stats.LastSessionEndTime == 0){
                 Stats.LastSessionEndTime = Date.now()
                 Stats.save().catch(err => console.log(err));
                 console.log(`Updated End time from DB: ${Stats.LastSessionEndTime}`)
 
             }
+
+            console.log(`End time from DB: ${Stats.LastSessionEndTime}`)
+            console.log(`Start time from DB: ${Stats.LastSessionStartTime}`)
+        
+         
 
             let StartTime =  (Stats.LastSessionStartTime);
             let EndTime = (Stats.LastSessionEndTime);
@@ -106,8 +107,14 @@ module.exports = (bot, oldState, newState)=>{
             if (StartTime == 0) {
                 EndTime = 0
             }
+
+            if  (TotalTime == 0){
+                TotalTime = TopTime;
+            }
             
-            console.log(`Total Time: ${TotalTime}`)
+            console.log(`Total Time from DB: ${Stats.TotalTime}`)
+            console.log(`Total Time from record: ${TotalTime}`)
+
 
             if (TotalTime == undefined) {
                 TotalTime = 0;
@@ -142,7 +149,7 @@ module.exports = (bot, oldState, newState)=>{
             Stats.LastSessionEndTime = 0;
             Stats.LastSessionStartTime = 0;
             Stats.LastSessionDuration = LastSessionDuration;
-            Stats.TotalTimeInVoice = TotalTime;
+            Stats.TotalTimeInVoice = Stats.TotalTimeInVoice + LastSessionDuration;
             Stats.TopTime = TopTime;
             Stats.save().catch(err => console.log(err));
 
